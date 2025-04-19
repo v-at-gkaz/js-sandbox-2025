@@ -1,0 +1,35 @@
+>>>>>> contentType = |application/x-www-form-urlencoded|
+>>>>>> chunk detected! length: 51
+>>>>>> data detected! length: 51
+>>>>>> data: |user-name=123&user-pass=456&files=the_test_file.txt|
+
+>>>>>> contentType = |text/plain|
+>>>>>> chunk detected! length: 55
+>>>>>> data detected! length: 55
+>>>>>> data: |user-name=www
+user-pass=eee
+files=the_test_file.txt
+|
+
+>>>>>> contentType = |multipart/form-data; boundary=----geckoformboundaryb228b076bb1b01aa2233e0f21d3e36b|
+>>>>>> chunk detected! length: 499
+>>>>>> data detected! length: 499
+>>>>>> data: |------geckoformboundaryb228b076bb1b01aa2233e0f21d3e36b
+Content-Disposition: form-data; name="user-name"
+
+www
+------geckoformboundaryb228b076bb1b01aa2233e0f21d3e36b
+Content-Disposition: form-data; name="user-pass"
+
+ddd
+------geckoformboundaryb228b076bb1b01aa2233e0f21d3e36b
+Content-Disposition: form-data; name="files"; filename="the_test_file.txt"
+Content-Type: text/plain
+
+The file line 1
+The file line 2
+End of file content
+
+
+------geckoformboundaryb228b076bb1b01aa2233e0f21d3e36b--
+|

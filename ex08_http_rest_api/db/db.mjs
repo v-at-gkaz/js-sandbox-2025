@@ -39,13 +39,16 @@ export class DataSource {
     }
 
     edit(user, id) {
+        let updatedUser;
         for (let index = 0; index < this.data.length; index++) {
-            const element = array[index];
+            const element = this.data[index];
             if(element.id === id) {
                 this.data[index] = user;
+                updatedUser = this.data[index];
             }
         }
         this._save();
+        return updatedUser;
     }
 
     delete(id) {
