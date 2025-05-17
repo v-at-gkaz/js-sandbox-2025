@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "DEBUG=ex09_express:* nodemon ./bin/www"
+    "dev": "export DEBUG=ex09_express:* && nodemon ./bin/www",
+    "devw": "set DEBUG=ex09_express:* && nodemon ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
