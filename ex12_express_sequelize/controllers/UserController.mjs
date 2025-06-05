@@ -22,18 +22,18 @@ export default class UserController {
         res.send(await userSrv.getAll());
     };
 
-    getById = (req, res) => {
+    getById = async (req, res) => {
         const id = this.getId(req);
-        res.send(userSrv.getById(id));
+        res.send(await userSrv.getById(id));
     };
 
-    create = (req, res) => {
+    create = async (req, res) => {
         const payload = req.body;
 
         // validation before call db service
         let valid = true;
-        valid = valid && payload.name;
-        valid = valid && payload.surname;
+        valid = valid && payload.login;
+        valid = valid && payload.password;
 
         if(!valid) {
             res.status(400).send({
@@ -43,26 +43,20 @@ export default class UserController {
             return;
         }
 
-        // validation service respone
-        const serviceQueryResult = userSrv.create(payload);
-
-        if(!serviceQueryResult.ok) {
+        try {
+            res.send(await userSrv.create(payload));
+        } catch (e) {
             res.status(500).send({error: 'Database error'});
-            return;
         }
-
-        // response to client
-        res.send(serviceQueryResult);
     };
 
-    patch = (req, res) => {
+    patch = async (req, res) => {
         const id = this.getId(req);
-
         const payload = req.body;
 
         // validation before call db service
         let valid = true;
-        valid = valid && (payload.name || payload.surname);
+        valid = valid && (payload.login || payload.password);
 
         if(!valid) {
             res.status(400).send({
@@ -72,27 +66,22 @@ export default class UserController {
             return;
         }
 
-        // validation service respone
-        const serviceQueryResult = userSrv.patch(id, payload);
-
-        if(!serviceQueryResult.ok) {
+        try {
+            res.send(await userSrv.patch(id, payload));
+        } catch (e) {
             res.status(500).send({error: 'Database error'});
-            return;
         }
-
-        // response to client
-        res.send(serviceQueryResult);
     };
 
-    update = (req, res) => {
+    update = async (req, res) => {
         const id = this.getId(req);
 
         const payload = req.body;
 
         // validation before call db service
         let valid = true;
-        valid = valid && payload.name;
-        valid = valid && payload.surname;
+        valid = valid && payload.login;
+        valid = valid && payload.password;
 
         if(!valid) {
             res.status(400).send({
@@ -102,30 +91,20 @@ export default class UserController {
             return;
         }
 
-        // validation service respone
-        const serviceQueryResult = userSrv.update(id, payload);
-
-        if(!serviceQueryResult.ok) {
+        try {
+            res.send(await userSrv.update(id, payload));
+        } catch (e) {
             res.status(500).send({error: 'Database error'});
-            return;
         }
-
-        // response to client
-        res.send(serviceQueryResult);
     };
 
-    delete = (req, res) => {
+    delete = async (req, res) => {
         const id = this.getId(req);
-
-        // validation service respone
-        const serviceQueryResult = userSrv.delete(id);
-
-        if(!serviceQueryResult.ok) {
+        try {
+            res.send(await userSrv.delete(id));
+        } catch (e) {
             res.status(500).send({error: 'Database error'});
-            return;
         }
-
-        res.status(204).send(null);
     }
 
     getId = (req) => {

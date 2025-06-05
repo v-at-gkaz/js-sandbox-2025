@@ -47,6 +47,6 @@ INSERT INTO public.orders (customer_id) VALUES
 (1),(2);
 
 INSERT INTO public.order_product (order_id, product_id, quantity) VALUES
-(3, 1, 1),(3, 2, 2),(3, 3, 3),(4, 4, 3),(4, 5, 1),(4, 6, 2);
+(1, 1, 1),(1, 2, 2),(1, 3, 3),(2, 4, 3),(2, 5, 1),(2, 6, 2);
 
 --select o.id "Номер заказа", c."name" "Заказчик", c.email "Электропочта", p."name" "Товар", p.id "Product Id", p.price "Цена", op.quantity "кол-во" from orders o, customers c, products p, order_product op where o.customer_id = c.id and c.id = 2 and o.id = op.order_id and op.product_id = p.id;

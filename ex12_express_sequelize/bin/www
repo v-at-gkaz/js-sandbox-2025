@@ -10,7 +10,7 @@ dotenv.config();
 
 import createDebug from "debug";
 
-const debug = createDebug('ex09_express:server');
+const debug = createDebug('ex12_express_sequelize:server');
 import * as http from "node:http";
 
 /**

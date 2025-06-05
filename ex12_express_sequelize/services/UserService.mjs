@@ -6,13 +6,14 @@ export default class UserService {
 
     getAll = async () => {
         try {
-            const resp = await db.sequelize.query('select * from users;');
+            // const resp = await db.sequelize.query('select * from users;');
+            const resp = await db.User.findAll();
 
-            debug(resp);
+            // debug(resp);
 
             return {
                 status: 'success',
-                data: resp[0]
+                data: resp
             };
         } catch (error) {
             return {
@@ -22,43 +23,92 @@ export default class UserService {
         }
     };
 
-    getById = (id) => {
-        // find one in db
-        return `${id}`;
+    getById = async (id) => {
+        try {
+            const resp = await db.User.findOne({
+                where: {id}
+            });
+
+            return {
+                status: 'success',
+                data: resp
+            };
+        } catch (error) {
+            return {
+                status: 'error',
+                data: error
+            };
+        }
     };
 
-    create = (payload) => {
-        // add to db
-        return {
-            ok: true,
-            status: 'create success',
-            created: payload
-        };
+    create = async (payload) => {
+        try {
+            const resp = await db.User.create(payload);
+
+            return {
+                status: 'created',
+                data: resp
+            };
+        } catch (error) {
+            return {
+                status: 'error',
+                data: error
+            };
+        }
     };
 
-    patch = (id, payload) => {
-        return {
-            ok: true,
-            status: 'patch success',
-            patchedFields: payload,
-            id: +id
-        };
+    patch = async (id, payload) => {
+
+        const found = await db.User.findOne({
+            where: {id}
+        });
+
+        for (const key in payload) {
+            found[key] = payload[key];
+        }
+
+        try {
+            await found.save();
+            return {
+                status: 'patched',
+                data: found
+            };
+        } catch (error) {
+            return {
+                status: 'error',
+                data: error
+            };
+        }
     };
 
-    update = (id, payload) => {
-        return {
-            ok: true,
-            status: 'update success',
-            updated: payload,
-            id: +id
-        };
+    update = async (id, payload) => {
+        try {
+            await db.User.update(payload, {where: {id}});
+            return {
+                status: 'updated',
+                data: {id}
+            };
+        } catch (error) {
+            return {
+                status: 'error',
+                data: error
+            };
+        }
     };
 
-    delete = (id) => {
-        debug('delete id', id);
-        return {
-            ok: true
-        };
+    delete = async (id) => {
+        try {
+            await db.User.destroy({where: {id}});
+            return {
+                status: 'deleted',
+                data: {id}
+            };
+        } catch (error) {
+            return {
+                status: 'error',
+                data: error
+            };
+        }
     }
 
 }
